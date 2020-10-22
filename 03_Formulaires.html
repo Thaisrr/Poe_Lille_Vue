@@ -12,6 +12,10 @@
     et pouvoir ajouter de nouveaux users à la liste -->
     <h3>Utilisateurs</h3>
 
+    <ul v-show="l_errors.length > 0">
+        <li class="text-danger" v-for="error of l_errors" >{{ error }}</li>
+    </ul>
+
     <div class="form-inline">
         <input class="form-control" placeholder="Nom" v-model="new_user.last_name">
         <input class="form-control" placeholder="Prenom" v-model="new_user.first_name">
@@ -30,17 +34,76 @@
         el: '#app',
         data: {
             new_user: { id: undefined, last_name: undefined , first_name: undefined},
-            l_users: []
+            l_users: [],
+            l_errors: []
         },
         methods: {
             saveUser: function () {
-                const copy = Object.assign({}, this.new_user);
-                copy.id = this.l_users.length; // A améliorer
-                // On réinitialise new_user pour plus de confort user
-                this.new_user.last_name = undefined;
-                this.new_user.first_name = undefined;
-                this.l_users.push(copy);
+                this.l_errors = [];
+
+                // === undefined || === null || === ''
+               if( this.new_user.last_name && this.new_user.first_name ) {
+                   let fname = this.new_user.first_name.trim();
+
+                   // Si le nom ou prénom est trop court :
+                   if(this.new_user.last_name.length < 2 || this.new_user.first_name.length < 2)
+                       this.l_errors.push('Les noms et prénoms doivent faire plus de 2 caractères');
+
+                  if(this.new_user.first_name === 'Prénom' )
+                      this.l_errors.push('"Prénom" n\'est pas un prénom !');
+
+
+                   // Si l'utilisateur à entrer uniquement des chiffres
+                   if (
+                       // !isNaN => true si c'est un number ( n'est pas 'Not a Number )
+                       // Number(str) -> convertit en number une string Number('23') = 23 / Number('toto') = NaN
+                      // !isNaN(Number(this.new_user.first_name)) // Ne vérifie que si mon nom est uniquement composé de chiffres
+                      // || !isNaN(Number(this.new_user.last_name))
+
+                         this.new_user.last_name.match(/[\d]/)
+                       || this.new_user.first_name.match(/\d/)
+
+                   )
+                       this.l_errors.push('Vous ne pouvez pas entrer de chiffres');
+
+                   if(this.l_users.findIndex(user =>
+                       user.last_name === this.new_user.last_name
+                       && user.first_name === this.new_user.first_name
+                   ) !== -1 ) {
+                        this.l_errors.push('Cet·te utilisateur·ice existe déjà')
+                   }
+
+                   if(this.l_errors.length === 0) {
+                       const copy = Object.assign({}, this.new_user);
+                       copy.id = this.l_users.length; // A améliorer
+
+                       // On réinitialise new_user pour plus de confort user
+                       this.new_user.last_name = undefined;
+                       this.new_user.first_name = undefined;
+                       this.l_users.push(copy);
+                   }
+
+               } else {
+                   if (!this.new_user.first_name) this.l_errors.push('Veuillez entrer un prénom');
+                   if (!this.new_user.last_name) this.l_errors.push('Veuillez entrer un nom de famille');
+               }
             }
+
+            /* On vérifie que le nom et le prénom soit plus grand ou égale à 2 caractères
+                1.
+                -> Nom / prénom trop court
+                -> On vérifier que l'utilisateur entre bien des lettres et pas des chiffres
+                ( on accepte les caractères spéciaux )
+
+                2.
+                -> On vérifie que l'utilisateur n'existe pas dans la liste
+
+                3.
+                -> On mets la première lettre en maj, et le reste en minuscule en prenant en compte le fait
+                qu'il puisse y a voir des noms composés
+
+
+             */
         }
     })
 </script>
