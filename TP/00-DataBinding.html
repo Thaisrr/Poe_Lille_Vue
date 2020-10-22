@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .large {
+            width: 20%;
+            margin: 20px;
+        }
+
+        .small {
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app" class="mx-auto">
+    <h3>Mes séries</h3>
+    <ul class="list-group">
+        <li v-for="(serie, index) of l_series"
+            class="list-group-item"
+            :class="getColor(index)"
+        >
+            {{serie}}
+        </li>
+    </ul>
+
+    <h3>Mes images</h3>
+
+    <img v-for="img of images" :key="img.id"
+         :src="img.src"
+         :alt="img.alt"
+         :title="img.alt"
+         :class="getImgClass()"
+    >
+
+</div>
+<script>
+    let images = [
+        {id: 1, src: 'https://cdn.radiofrance.fr/s3/cruiser-production/2019/04/3de4b702-38df-4410-8b6b-160a4872002d/838_gameofthrones8-20-posters_1.jpg', alt: 'Une Super image !'},
+        {id: 2, src: 'https://cdn.radiofrance.fr/s3/cruiser-production/2019/04/3de4b702-38df-4410-8b6b-160a4872002d/838_gameofthrones8-20-posters_1.jpg', alt: 'Une Super image !'},
+        {id: 3, src: 'https://cdn.radiofrance.fr/s3/cruiser-production/2019/04/3de4b702-38df-4410-8b6b-160a4872002d/838_gameofthrones8-20-posters_1.jpg', alt: 'Une Super image !'},
+        {id: 4, src: 'https://cdn.radiofrance.fr/s3/cruiser-production/2019/04/3de4b702-38df-4410-8b6b-160a4872002d/838_gameofthrones8-20-posters_1.jpg', alt: 'Une Super image !'}
+    ];
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            l_series: ['Game of Throne', 'Umbrella Academy', 'Sabrina', 'Ratched', 'American Horror Story'],
+            images, // images est une variable, donc je n'ai pas à mettre ': valeur'
+        },
+       methods: {
+           getColor: function(index) {
+               return (index % 2 === 0) ? 'text-primary' : 'text-info';
+           },
+           getImgClass: function () {
+               return window.innerWidth > 500 ? 'large' : 'small'
+           }
+       }
+    })
+</script>
+
+</body>
+</html>

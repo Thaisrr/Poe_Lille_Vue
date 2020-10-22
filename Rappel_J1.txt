@@ -1,0 +1,14 @@
+Rappel Introduction Vue JS
+
+- On peut 'installer' Vue via un lien CDN ( une balise script dans le head )
+- Vue c'est un objet qu'on instancie via un constructeur : new Vue()
+- Ce constructeur prend en paramètre un objet qui a pour attribut :
+    el : string -> l'id de l'élément html dans lequel va s'éxécuter Vue '#app'
+    methods : objet {} de fonctions
+    data : objet {} donc chaque attribut représente une valeur / variable a partager avec le DOM
+
+- Vue créé un Dom Virtuel qui permet d'interpréter en direct des valeurs : variables, fonction avec retour, condition...
+    -> {{ }} a mettre entre les balises html pour interpréter une valeur
+    -> v-for, v-if, v-show... permettent de mettre de la logique dans le HTML
+    -> v-bind: + attribut html ( src, alt, class, id, ... )
+    -> v-model : qui lie une propriété data avec un input

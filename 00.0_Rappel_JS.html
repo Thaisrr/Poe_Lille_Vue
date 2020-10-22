@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rappel Javascript</title>
+
+</head>
+<body>
+
+
+
+
+<script>
+
+    /* Les String = chaînes de caractères */
+    let foo = "Hello World";
+    foo = "Bonjour le monde !";
+    const name = 'Thais';
+    let message = foo + ' ' + name;
+    let message_bis = `${foo} ${name} ! :D`;
+
+    /* Les Numbers = nombres entiers ou décimaux */
+    let numb = 235;
+    let somme = 45 + 34.98;
+    let div = numb / somme;
+    numb += 12; // number + 12
+    numb++; // numb + 1
+    numb--;
+    numb *= 34;
+    /*
+    Opérateurs :
+    - + * / %
+    ++ --, ...
+    */
+
+    /* Les booleans = Conditions -> retournes true ou false  ***/
+    let bool = true;
+    let condition = 45 < 90;
+    /*
+    Opérateurs de conditions :
+    <, >, <=, >=
+    ===
+    !==
+    pour enchaîner plusieurs conditions :
+    || ou
+    && et
+     */
+
+    /* Les Array ou  listes */
+    let l_fruits = ['Orange', 'Mangues', 'Pomme', 'Patate'];
+
+    /** Les objets *******/
+
+    let article = {
+        title : 'J\'ai plus d\'idée',
+        date : '42/13/22'
+    };
+
+    let user = {
+        name: 'Charles Xavier',
+        mail: 'cx@xmail.com',
+        age: 234,
+        isTeacher: true,
+        l_hobbies: [
+            'Lire dans les pensées',
+            'Faire des discours motivants',
+            'Se faire trahir par Magneto'
+        ],
+        address: {
+            number : 23,
+            street: '1407 Graymalkin Lane',
+            city : 'Salem Center',
+            country : 'USA'
+        },
+        l_articles: [
+            { title: 'Pourquoi Magneto est-il un faquin', date : '23/04/99'},
+            { title: 'Top 7 des meilleurs Xmen, le 3 va vous étonner !', date : '12/03/99'},
+            article
+        ]
+    };
+
+    console.log(user.name);
+    console.log(user.address.street);
+
+    console.log(user.l_hobbies);
+
+    console.log('***** Boucle forEach');
+    user.l_hobbies.forEach(hobby => console.log(hobby));
+
+    console.log('***** Boucle For');
+    /*
+    En premier :
+    créer une variable i égale à 0
+    En deuxième :
+     Je demande de parcourir la boucle tant que la condition que je donne est vrai
+     ici -> tant que i est inférieur à la taille de ma liste
+    En troisième :
+    J'incrémente i ( à chaque tour, on ajoute +1 à la valeur de i
+
+    Au premier tour ( au premier console log )
+        -> I = 0, puis 1, puis 2.
+        On s'arrête puisque si i = 3, ma condition n'est plus vrai, donc on ne fait les instructions.
+     */
+
+    let tableau_chiant = [
+        ['Artichauds', 'Choux de bruxelles'],
+        ['Epinards', 'Courgettes']
+    ];
+
+
+    for(let i = 0; i < user.l_hobbies.length; i++ ) {
+        console.log(i + ' -> ' + user.l_hobbies[i]);
+    }
+
+    console.log('***** Boucle For Of');
+    for(let hobby of user.l_hobbies) {
+        console.log(hobby);
+    }
+
+
+    /**** Conditions *****/
+
+    let a = 23;
+    /*
+    Si a est supérieur à 25, je veux afficher dans la console : 'pouf'
+    Sinon ( si a est inférieur ou égal à 25) je veux afficher 'plop'
+     */
+    // Solution avec IF
+    if(a > 25) {
+        console.log('Pouf');
+    } else {
+        console.log('Plop');
+    }
+
+    // SOlution ternaire
+    console.log( a > 25 ?  'Plouf' : 'Plop');
+
+    // /!\ Pas Beau -> Solution switch ( pas adaptée dans ce cas )
+    switch (a > 25) {
+        case true:
+            console.log('Plouf');
+            break;
+        case false:
+            console.log('Plop');
+    }
+
+    /***** Les fonctions *************/
+
+    //Ecriture 'basique' à l'ancienne
+    function sayHello(name) {
+        console.log(`Hello ${name} !`);
+    }
+    sayHello('World');
+
+    // ES6 ? -> fonctions anonymes
+    destroyWorld = function() {
+        console.log('Order 666');
+        console.log('Destroying the world !');
+    };
+
+    // ES6 -> fonctions fléchées
+    sayHi = (name) => {
+        return 'Hello there ' + name
+    };
+    console.log(sayHi('General Kenobi'));
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

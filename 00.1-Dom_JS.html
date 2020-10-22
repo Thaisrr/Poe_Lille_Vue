@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="msg"></p>
+<button id="btn">Changer le message</button>
+
+<ul id="list"></ul>
+
+<script>
+    // ES6 -> fonctions fléchées avec retour
+    sayHi = (name) => {
+        return 'Hello there ' + name
+        // Ici, ma fonction renvoie une chaîne de caractère et peut donc être utilisée comme un variable string
+    };
+
+    let message = sayHi('General Kenobi');
+
+    /* Afficher une variable dans le DOM */
+    document.querySelector('#msg').textContent = message;
+
+    // Modifier le message en envoyant 'Coucou'
+    document.querySelector('#btn').addEventListener('click', () => {
+        message = sayHi('Géraldine');
+        document.querySelector('#msg').textContent = message;
+    });
+
+    /*
+    En JS, modifier la valeur d'une variable affichée dans le DOM ne modifie pas directement l'affichage HTML,
+    Il faut ensuite modifier soit même l'affichage pour que les changements soient visibles.
+     */
+
+    let l_movies = ['The Lord of the Ring', 'Harry Potter', 'Kuzco'];
+
+    /* créer une balise li pour chaque élément de liste en js */
+    const my_ul = document.getElementById('list');
+
+    l_movies.forEach(movie => {
+        const my_li = document.createElement('li');
+        my_li.className = 'list-group-item';
+        my_li.textContent = movie;
+        my_ul.appendChild(my_li);
+    });
+
+</script>
+
+</body>
+</html>

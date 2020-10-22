@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les Classes</title>
+</head>
+<body>
+
+<script>
+    class User {
+        name;
+        mail;
+
+        constructor(p_name, p_mail) {
+            this.name = p_name;
+        }
+
+        // say hello a un autre user
+        sayHello(someone) {
+            // This : l'utilisateur qui fait l'action user.sayHello(...)
+            console.log(this.name + ' says hello to ' + someone.name);
+        }
+
+        setName(new_name) {
+            this.name = new_name
+        }
+    }
+
+    let my_user = new User('Toto', 'toto@mail.fr');
+    let my_user2= new User('Michel', 'michel@mail.fr');
+
+    my_user.sayHello(my_user2);
+
+    my_user2.setName('Jean');
+
+</script>
+
+</body>
+</html>

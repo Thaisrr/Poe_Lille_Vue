@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Data Binding</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <img v-bind:src="img" v-bind:width="width" v-bind:alt="alt">
+    <img :src="img" :width="width" :alt="alt">
+
+    <img :src="image.src" :alt="image.alt" :width="width">
+
+    <p :class="text_color">Mon super texte !</p>
+    <button v-on:click="changeTextColor()">Changer la couleur</button>
+
+    <!-- 'text-' => une chaîne de caractère, qui correspond au début du nom de la classe
+     color => sans quotes -> C'est donc mon attribut color, dans data
+     => valeur de base text-warning
+     -->
+    <p :class=" 'text-' + color ">Un autre paragraphe</p>
+    <button :class=" 'btn-outline-' + color"
+            class="btn"
+            v-on:click="changeColor()">
+        Changer ma couleur
+    </button>
+
+    <!-- Afficher ma liste, et binder la classe en fonction de la longueur de l'item -->
+    <ul class="list-group">
+        <li v-for="movie of l_movies"
+            class="list-group-item"
+            :class="getColor(movie)">{{ movie }}</li>
+    </ul>
+
+    <!-- Exo time !
+    Créer un nouveau fichier avec Vue
+     Afficher une liste de string : ( liste de titres de livres )
+     Changer la couleur du texte une ligne sur deux
+     --->
+
+    <!-- v-show, v-if et v-else-if
+    prennent en paramétre une boolean donc une condition ou qqch qui renvoie vrai / faux -->
+    <button class="btn btn-info" v-on:click="isVisible = !isVisible">Afficher le secret</button>
+    <!-- avec v-show, même si l'élément est caché, il existe dans le dom virtuel,
+      contrairement au v-if qui doit le recréer à chaque changement -->
+    <p v-show="isVisible">Mon paragraphe secret</p>
+    <p v-show="!isVisible">Pas de paragraphe secret</p>
+
+    <p v-if="isVisible">Mon super secret mystérieux</p>
+    <!-- v-else-if -->
+    <p v-else>Il n'y a rien a voir ici !</p>
+
+    <div class="form-group">
+        <label>Nom : </label>
+        <input class="form-control" type="text" v-model="name">
+    </div>
+    <p v-if="!name">Vous n'avez pas entré d'information pour le moment</p>
+    <p v-else>Votre nom est : {{ name }}</p>
+
+
+    <!-- Exo number 2 time :
+        -> Créer une phrase secrete accessible via un mot de passe
+            -> Un input pour entrer un mot de passe
+                -> Si l'input est vide : on demande à l'utilisateur.ice d'entrer un mp
+                -> Si l'input n'est pas vide, mais que le mp est faux, on affiche 'mp incorrect'
+                -> Si le mp est bon, on affiche la phrase secrète
+       ->
+    -->
+
+</div>
+
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            img: 'https://sm.ign.com/ign_fr/news/b/baby-yoda-/baby-yoda-is-being-added-to-minecraft_bjqc.jpg',
+            width: 200,
+            alt: 'Une super image !',
+            image: {
+                src: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg',
+                alt: 'Un superbe arbre !'
+            },
+            text_color: 'text-success',
+            color: 'warning',
+            l_movies: ['The Lord of the Ring', 'Harry Potter', 'Kuzco'],
+            isVisible: false,
+            name: undefined
+        },
+        methods: {
+            changeTextColor: function () {
+                this.text_color = (this.text_color === 'text-success') ? 'text-danger' : 'text-success';
+            },
+            changeColor: function () {
+                this.color = this.color === 'warning' ? 'info' : 'warning';
+            },
+            getColor: function (string) {
+                return string.length > 10 ? 'text-primary' : 'text-secondary';
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

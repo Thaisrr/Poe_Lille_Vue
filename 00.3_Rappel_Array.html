@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les listes JS</title>
+</head>
+<body>
+
+<script>
+    /*
+https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array
+https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String
+
+   -> Quand on utilise une méthode, on vérifie dans la doc si la méthode modifie directement
+la valeur de l'objet ou si on a une valeur de retour
+    l_list.reverse() -> Modifie directement l_list
+*/
+
+
+    // List === Array
+    let l_jeux = ['The Witcher III', 'Ori', 'Alice Madness Return'];
+
+    console.log(l_jeux[0]); // Affiche le 1er élément de ma liste
+
+    // Pour parcourir une liste, on fait une BOUCLE
+    // For -> si besoin de l'index ou de modifier des éléments dans la liste
+    // , for of, ou forEach ( v-for pour Vue.js dans le HTML )
+
+    l_jeux.forEach(jeu => {
+        console.log(jeu);
+    });
+
+    // Pour ajouter un élément à la liste
+    l_jeux.push('The Last of Us');
+
+    // Pour récupérer l'index / la position d'un élément :
+    // La fonction retourne un number
+    let index = l_jeux.indexOf('Ori');
+    // Si il ne trouve il renvoie -1
+
+    // Pour supprimer un élément
+    // en paramétre : la position de l'élément à supprimer, et le nombre d'élément à supprimer
+    // Ici on supprime Ori
+    l_jeux.splice(index, 1);
+
+    let taille_de_liste = l_jeux.length;
+
+
+    /****** En plus *****************/
+
+    // Trouver
+    let index2 = l_jeux.findIndex(item => item.length < 10);
+    // Si il ne trouve il renvoie -1
+
+
+    l_jeux.reverse();
+    let array_to_string = l_jeux.join(' ');
+
+    /*
+    -> prendre un tableau avec des fruits :
+    ['Pomme', 'Poire', 'Banane', 'Poire', 'Poire', 'Mangue']
+    -> Fonction qui supprime toutes les poires
+    -> Fonction qui supprime tous les doublons
+    -> Fonction qui supprime tous les éléments qui commence par 'P'
+    -> Un tableau avec des notes de 1 à 20
+           -> Une fonction qui renvoie deux tableaux :
+                un avec les notes en dessous de la moyenne
+                un avec les notes au dessus de la moyenne
+     */
+
+    /**** Les Strings : *****/
+
+    let string = 'Ananas';
+    string.toLowerCase(); // Pour mettre en minuscule
+    string.toUpperCase(); // Pour mettre en majuscule
+    string.split(''); // Pour découper caractère par caractère et mettre dans un tableau
+    // ['A', 'N', 'A', 'N', 'A', 'S']
+    string.trim(); // Pour enlever les blancs ( espaces et tabulations ) en début et fin de chaîne
+    // Faire une fonction qui prend une phrase ( string ) et qui range tous les mots par ordre alphabétique
+
+
+    let numb = 34;
+    let str = numb.toString();
+
+    /**** Les numbers ********/
+    function diviser(a, b) {
+        // isNaN(numb) renvoie true si numb n'est pas un nombre, et false si c'est un nombre.
+        if( isNaN(a) || isNaN(b)) return 'Veuillez entrer des nombres';
+        return a / b;
+        console.log('Ce console log ne sera jamais affiché');
+    }
+
+    diviser(23, 45); // 23 / 45
+    diviser('Patate', 'Brocoli'); // NaN = Not a Number
+
+    /***** Mutables et immutables -> Adresse mémoire *************/
+
+    let foo = 'Hello !';
+    let bar = foo;
+    // bar et foo sont égales à 'Hello !'
+    foo = 'Holà !';
+    // bar = 'Hello !'
+    console.log('bar = ' + bar);
+
+    let obj = {name: 'Mon', lastName: 'Nom'};
+    let obj2 = obj; // Mon Nom On créé un nouveau pointeur vers la même adresse mémoire
+    let obj3 = Object.assign({}, obj); //Créé une copie de l'objet, à une nouvelle adresse mémoire
+    obj.name = 'My';
+    obj.lastName = 'Name';
+    // obj2.name = ? My Name
+    console.log(obj2.name);
+    console.log(obj3.name);
+
+    let lst = ['Pomme', 'Poire'];
+    let lst2 = lst; // Pomme Poire -> On créé un nouveau pointeur vers la même adresse mémoire
+    let lst3 = Array.from(lst); // Fait une copy du tableau et créé une nouvelle adresse mémoire
+    lst.pop(); // Enlever le dernier élément
+    // lst = ['Pomme']
+    // lst2 = ?
+    console.log(lst2);
+    console.log(lst3);
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

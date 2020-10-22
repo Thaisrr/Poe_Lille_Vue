@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Les formulaires </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app" class="w-50 mx-auto">
+    <!-- On veut afficher une liste d'utilisateur.ices,
+    et pouvoir ajouter de nouveaux users à la liste -->
+    <h3>Utilisateurs</h3>
+
+    <div class="form-inline">
+        <input class="form-control" placeholder="Nom" v-model="new_user.last_name">
+        <input class="form-control" placeholder="Prenom" v-model="new_user.first_name">
+        <button class="btn btn-primary" v-on:click="saveUser()">Enregistrer</button>
+    </div>
+
+    <p v-show="l_users.length === 0">Vous n'avez pas d'utilisateur·ice pour le moment</p>
+    <ul>
+        <li v-for="user of l_users" > {{ user.first_name }} {{ user.last_name }}</li>
+    </ul>
+
+</div>
+<script>
+    // Créer un utilisateur : { nom:'', prenom: ''}
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            new_user: { id: undefined, last_name: undefined , first_name: undefined},
+            l_users: []
+        },
+        methods: {
+            saveUser: function () {
+                const copy = Object.assign({}, this.new_user);
+                copy.id = this.l_users.length; // A améliorer
+                // On réinitialise new_user pour plus de confort user
+                this.new_user.last_name = undefined;
+                this.new_user.first_name = undefined;
+                this.l_users.push(copy);
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
