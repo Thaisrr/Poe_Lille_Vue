@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- Les Propriété de Vue ------->
+
+    <!-- La variable a existe dans l'instance de VueJS -> elle a été déclarée et est donc dynamique et modifiable -->
+    <p>{{ a }}</p>
+
+    <!-- La variable b n'est pas déclarée à l'instanciation de Vue,
+    même si je la créé plus tard, elle ne sera pas rendue dans le DOM virtuel. -->
+    <p>{{ b }}</p>
+
+    <!-- Ici, la variable existe et est visible, mais non dynamique -->
+    <p>{{ c = 'Bidule' }}</p>
+
+    <!-- Cycle de vie de Vue JS ------>
+
+    <!---
+    -> Crée les variables qu'on déclare dans data, methods...
+    -> Crée le DOM virtuel -> La page s'affiche
+    -> Update à chaque modification
+    -> Destruction du DOM virtuel à la fermeture de la page / a la demande...
+    -->
+
+    <!--
+    BeforeCreated => Les variables n'existent pas encore ( undefined )
+    Created => Les variables sont initialisées
+
+    -->
+
+    <input v-model="a">
+
+
+</div>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            a: 'Je reprendrais bien un café !',
+            seconds: 0,
+            data: 'I m data ! '
+        },
+
+        beforeCreate: function () {
+            console.log('Before Create a => ' + this.a);
+        },
+        created: function () {
+            console.log('Created a => ' + this.a)
+        },
+        beforeMount : function () {
+            console.log('Before mount')
+        },
+        mounted: function () {
+            // pour faire quelque
+            this.$interval = setInterval( () => {
+                this.seconds++;
+                console.log(this.seconds);
+            }, 1000 )
+        },
+        beforeDestroy: function () {
+            console.log('Destroying a => ' + this.a)
+        },
+        destroyed: function () {
+            console.log('Destroyed = >' + this.a);
+            clearInterval(this.$interval);
+        }
+
+    });
+
+    console.log(vm.data)
+
+</script>
+
+</body>
+</html>

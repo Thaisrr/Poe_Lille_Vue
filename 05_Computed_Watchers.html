@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Computed and Watchers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app" class="w-50 mx-auto">
+
+    <h2 class="my-3">Les Computed</h2>
+
+    <div class="form-group">
+        <label>!True === false ?</label>
+        <input class="form-control" v-model="answer">
+    </div>
+    <p :class="checkAnswer()">Répondez correctement pour afficher en vert</p>
+
+    <div class="form-group">
+        <label>Quelle est la couleur du cheval bleu d'Henri IV ?</label>
+        <input class="form-control" v-model="answer2">
+    </div>
+    <!-- checkAnswerBis n'est plus une méthode, donc on l'appel sans parenthèses,
+    c'est une propriété computed. Les propriétés computed ne se lancent que lorsque les propriétés qu'ils surveillent
+    sont modifié, contrairement aux méthodes appelées en v-binding qui surveillent en permanence-->
+    <p :class="checkAnswerBis">Répondez correctement pour afficher en vert</p>
+
+
+    <!-- On peut utiliser les computed pour filtrer un tableau -->
+    <p>{{ getFilteredArray }}</p>
+
+    <p>Ma phrase inversée</p>
+
+    <!-- OU pour afficher des expressions complexes de manière plus lisible -->
+    <p>{{ sentence.split('').reverse().join('') }}</p>
+    <p>{{ reversed_message }}</p>
+
+    <p>{{ fullName }}</p>
+    <input v-model="fullName">
+
+    <div class="fomr-group">
+        <label>Quel est le meilleur livre du monde ?</label>
+        <input v-model="book">
+    </div>
+    <p>Le meilleur livre du monde est : {{ book }}</p>
+
+</div>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            answer: undefined,
+            answer2: undefined,
+            test_data: 'Hello ',
+            l_list: ['Tomate', 'Riz', 'Epinards', 'Courgette', 'Choux de Bruxelle'],
+            sentence : "Les chaussettes de l'archiduchesse sont-elles seches archi seches ?",
+            first_name: 'Germaine',
+            last_name: 'BagelAuHummous',
+            book: undefined
+        },
+        methods: {
+            checkAnswer: function () {
+                console.log('***** in check anwser');
+                return this.answer && this.answer.trim().toLowerCase() === 'true' ? 'text-success' : 'text-warning';
+            },
+
+        },
+        computed: {
+            checkAnswerBis: function () {
+                console.log('---- in check anwser bis');
+                return this.answer2 && this.answer2.trim().toLowerCase() === 'true' ? 'text-success' : 'text-warning';
+            },
+            getFilteredArray: function () {
+                let filtered = [];
+                this.l_list.forEach(item => {
+                    if(item.trim().charAt(0) !== 'C') filtered.push(item);
+                });
+                return filtered;
+            },
+            reversed_message: function () {
+                return this.sentence.split('').reverse().join('');
+            },
+            fullName: {
+                get: function () {
+                    return this.first_name + ' ' + this.last_name;
+                },
+                set: function (value) {
+                    const array = value.split(" ");
+                    this.first_name = array[0];
+                    this.last_name = array[1];
+                },
+            }
+        },
+        watch: {
+            book: function (value) { // Sur une data
+                console.log('Book has been changed');
+            },
+            fullName: function (value) { // Sur une computed
+                console.log('FullName has been changed');
+            },
+            toto: function () { // Sur un élément non instancié : pas de réaction
+                console.log('Toto n\'existe pas ! ')
+            }
+        }
+    });
+
+    class User {
+        _id;
+        _name;
+        _email;
+        static nb_user = 0;
+
+        constructor(p_name) {
+            User.nb_user++;
+            this.setName(p_name);
+            this._id = User.nb_user;
+        }
+
+        getName() {
+            return this._name;
+        }
+
+        setName(value) {
+            this._email = value.toLowerCase() + '@dawan.fr';
+            this._name = value;
+        }
+
+        getId() {
+            return this._id;
+        }
+
+        getEmail() {
+            return this._email;
+        }
+    }
+
+    let user = new User('Jean');
+    console.log(user.getId()); // et non plus user._id
+    console.log(user.getEmail());
+    console.log(user.getName());
+    console.log(User.nb_user);
+
+
+
+</script>
+
+</body>
+</html>
