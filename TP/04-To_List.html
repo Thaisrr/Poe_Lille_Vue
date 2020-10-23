@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDO List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/22dce008cd.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <div class="form-inline">
+        <input v-model="new_task">
+        <button @click="addTask()" @keyup.enter="addTask()">Add</button>
+    </div>
+
+    <h4>Mes tâches</h4>
+    <div class="row">
+        <ul class="p-0 col-5">
+            <li class="list-group-item list-group-item-warning">A faire</li>
+            <li v-for="(task, index) of l_todos" class="list-group-item list-group-item-action row">
+                <span class="col-6">{{task}}</span>
+                <i class="fas fa-check text-success col-1" @click="addToDone(index)"></i>
+                <i class="fas fa-trash text-warning col-1" @click="deleteTask(index)"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <ul class="p-0 col-5">
+            <li class="list-group-item list-group-item-warning">Done</li>
+            <li v-for="(task, index) of l_dones" class="list-group-item list-group-item-action row">
+                <span class="col-6">{{task}}</span>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            new_task: undefined,
+            l_todos: ['Corriger'],
+            l_dones: []
+        },
+        methods: {
+            addTask: function () {
+                this.l_todos.push(this.new_task);
+                this.new_task = undefined;
+            },
+            deleteTask: function (i) {
+                this.l_todos.splice(i, 1);
+            },
+            addToDone: function (i) {
+                this.l_dones.push(this.l_todos[i]);
+                this.deleteTask(i);
+            },
+            emptyDone: function () {
+                this.l_dones = [];
+            }
+        }
+    });
+
+
+</script>
+
+<!-- Faire une todo list
+1. 15min
+-> Un input pour enregistrer une tâche ['Dormir]',
+-> Un rendu / affichage de la liste de toutes mes tâches
+
+2. 5min
+-> On ne peut pas entrer une tâche vide
+-> On affiche une erreur si on entre une tâche vide
+
+3. 10min
+-> Un bouton pour supprimer une tâche de la liste
+
+4.
+-> Une liste des tâches effectuées
+-> Un bouton pour ajouter enlever une tâche de la liste 'todo' et l'ajouter à la liste 'done'
+-> Un bouton pour vider la liste des tâches 'done'
+
+-->
+</body>
+</html>
