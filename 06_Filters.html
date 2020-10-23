@@ -7,8 +7,55 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
+<div id="app">
+    <!-- A l'affichage, last_name en majuscule, et first_name avec une majuscule au début -->
+    <p>{{last_name | uppercase }}</p>
+    <p>{{first_name | titelize }}</p>
+
+    <ul>
+        <li v-for="word in l_words">{{ word | isPal}}</li>
+    </ul>
+</div>
+<script>
+
+    Vue.filter('uppercase', function (value) {
+        return value.toUpperCase();
+    });
+
+    Vue.filter('titelize', function (value) {
+        return value.charAt(0).toUpperCase() + value.substr(1).toLowerCase();
+    });
+
+    /*
+    Créer un filtre isPalindromme // Pipe
+    -> retourne : string + est un palindrommme : + palindromme
+    -> retourne : string + n'est pas un palindrommme : + palindromme
+    {{ Kayak | isPal }} Kayak est un palidromme : kayak
+     */
+    Vue.filter('isPal', function (value) {
+        let initial_value = value.toLowerCase().trim().split(' ').join('');
+        let reversed_value = value.toLowerCase().trim().split(' ').join('').split('').reverse().join('');
+        if(initial_value === reversed_value) return initial_value + ' est un pal "' + reversed_value + '"';
+        else return initial_value + ' n\'est pas un pal "' + reversed_value + '"';
+    });
 
 
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            last_name: 'bon',
+            first_name: 'jeAn',
+            l_words: [
+                'Kayak',
+                'toto',
+                'Esope reste ici et se repose',
+                'Toto va à la plage'
+            ]
+
+        }
+    });
+</script>
 
 </body>
 </html>
